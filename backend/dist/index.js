@@ -1,7 +1,12 @@
-import express from "express";
-const app = express();
-// Middlewares
-app.use(express.json());
+import app from "./app.js";
+import { connectToDatabase } from "./db/connection.js";
 // Connections and listeners
-app.listen(3000, () => console.log("Server is running on port 3000"));
+const PORT = process.env.PORT || 3000;
+try {
+    await connectToDatabase();
+    app.listen(PORT, () => console.log("Server is running on port 3000"));
+}
+catch (error) {
+    console.log("Error connecting to database: ", error);
+}
 //# sourceMappingURL=index.js.map
